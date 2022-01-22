@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <h1>URL Shortener</h1>
+    <h2>Please enter an URL to shorten</h2>
+    <form action="" onsubmit="sendMessage(event)">
+      <input type="text" id="messageText" autocomplete="off" />
+      <button>Send</button>
+    </form>
+    <h2>Your shortened URL:</h2>
+    <div id="result"></div>
+    <script>
+      var ws = new WebSocket("ws://localhost:8000/ws");
+      ws.onmessage = function (event) {
+        var child = document.getElementsByTagName("h3")[0];
+        if (child != null) {
+          child.remove();
+        }
+        var result = document.getElementById("result");
+        var message = document.createElement("h3");
+        var content = document.createTextNode(event.data);
+        message.appendChild(content);
+        result.appendChild(message);
+      };
+      function sendMessage(event) {
+        var input = document.getElementById("messageText");
+        ws.send(input.value);
+        input.value = "";
+        event.preventDefault();
+      }
+    </script>
+  </body>
+</html>
