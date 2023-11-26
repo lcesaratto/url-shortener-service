@@ -1,4 +1,4 @@
-# Shortest-URL-REST-API
+# URL Shortener Service
 
 ### Technologies
 
